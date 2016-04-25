@@ -3,20 +3,21 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.logging.Logger;
 
 /**
  * @author frasco2001
  *
  */
 public class Triangulo {
-	Punto[] triangulo = new Punto[3];
+	Punto[] triangulito = new Punto[3];
 
 	/**
 	 * 
 	 * @param z
 	 */
 	public Triangulo(Punto[] z) {
-		this.triangulo = z;
+		this.triangulito = z;
 	}
 
 	/**
@@ -26,10 +27,10 @@ public class Triangulo {
 	 * @param derecho
 	 */
 	public Triangulo(Punto izquierdo, Punto vertice, Punto derecho) {
-		// triangulo = new Punto[3];
-		triangulo[0] = vertice;
-		triangulo[1] = derecho;
-		triangulo[2] = izquierdo;
+		
+		triangulito[0] = vertice;
+		triangulito[1] = derecho;
+		triangulito[2] = izquierdo;
 	}
 
 	/**
@@ -57,16 +58,14 @@ public class Triangulo {
 		Punto pi = new Punto(derecha.x - vertice.x, derecha.y - vertice.y);
 		Punto pj = new Punto(izquierda.x - vertice.x, izquierda.y - vertice.y);
 
-		// calculamos su angulo de coordenada polar
-		double ang_pi = Math.atan2((double) pi.x, (double) pi.y);
-		double ang_pj = Math.atan2((double) pj.x, (double) pj.y);
+		
+		double angpi = Math.atan2((double) pi.x, (double) pi.y);
+		double angpj = Math.atan2((double) pj.x, (double) pj.y);
 
-		// hallamos la diferencia
-		double ang = ang_pj - ang_pi;
+		
+		double ang = angpj - angpi;
 
-		// Si el angulo es negativo le sumamos 2PI para obtener el
-		// angulo en el intervalo [0-2PI];
-		// siempre obtenemos ángulos positivos (en sentido antihorario)
+		
 		if (ang < 0.0)
 			return Math.toDegrees(ang + (2.0 * Math.PI));
 		else
@@ -94,7 +93,7 @@ public class Triangulo {
 	 * @return
 	 */
 	public Punto[] getTriangulo() {
-		return triangulo;
+		return triangulito;
 	}
 
 	/**
@@ -102,7 +101,7 @@ public class Triangulo {
 	 * @param triangulo
 	 */
 	public void setTriangulo(Punto[] triangulo) {
-		this.triangulo = triangulo;
+		this.triangulito = triangulo;
 	}
 
 	/**
@@ -110,7 +109,7 @@ public class Triangulo {
 	 * @return
 	 */
 	public Punto getVertice() {
-		return triangulo[0];
+		return triangulito[0];
 	}
 
 	/**
@@ -118,7 +117,7 @@ public class Triangulo {
 	 * @return
 	 */
 	public Punto getDerecha() {
-		return triangulo[1];
+		return triangulito[1];
 	}
 
 	/**
@@ -126,7 +125,7 @@ public class Triangulo {
 	 * @return
 	 */
 	public Punto getIzquierda() {
-		return triangulo[2];
+		return triangulito[2];
 	}
 
 	/**
@@ -134,7 +133,7 @@ public class Triangulo {
 	 */
 	@Override
 	public String toString() {
-		return Arrays.toString(triangulo);
+		return Arrays.toString(triangulito);
 	}
 
 	/**
@@ -147,13 +146,13 @@ public class Triangulo {
 		// Array con los triangulos de la solucion
 		Triangulo[] trianguloSalida;
 		// Lista original de vertices del poligono
-		LinkedList<Punto> vertex = new LinkedList<Punto>();
+		LinkedList<Punto> vertex = new LinkedList<>();
 		// Lista auxiliar de vertices
-		LinkedList<Punto> auxVertex = new LinkedList<Punto>();
+		LinkedList<Punto> auxVertex = new LinkedList<>();
 		// Lista de vertices para comprobar si estan contenidos en el triangulo
-		LinkedList<Punto> contenido = new LinkedList<Punto>();
+		LinkedList<Punto> contenido = new LinkedList<>();
 		// Lista de vertices eliminados en la triangulacion
-		LinkedList<Punto> eliminados = new LinkedList<Punto>();
+		LinkedList<Punto> eliminados = new LinkedList<>();
 
 		for (int i = 0; i < poligono.length; i++) {
 			vertex.add(poligono[i]);
@@ -164,9 +163,9 @@ public class Triangulo {
 		ListIterator<Punto> iter1 = vertex.listIterator();
 		// Instanciacion de los puntos que formaran los posibles triangulos
 		// del poligono
-		Punto izquierdo = null; 
-				Punto angulo = null;
-				Punto derecho = null;
+		Punto izquierdo; 
+				Punto angulo;
+				Punto derecho;
 		// Contador de vueltas o puntos que no han podido ser eliminados en
 		// principio en el proceso de triangulacion
 		int vueltas = 0;
@@ -190,14 +189,14 @@ public class Triangulo {
 				}
 			}
 			// Salida por pantalla de los puntos de los posibles triangulos
-			System.out.println(posibleTrianguloToString());
+			Logger.getLogger(posibleTrianguloToString());
 			if (iterAux1.hasPrevious()) {
 				izquierdo = iterAux1.previous();
 				iterAux1.next();
 			} else {
 				izquierdo = auxVertex.getLast();
 			}
-			System.out.println("Punto izquierdo:" + izquierdo);
+			Logger.getLogger("Punto izquierdo:" + izquierdo);
 
 			if (iterAux1.hasNext()) {
 				angulo = iterAux1.next();
@@ -214,37 +213,37 @@ public class Triangulo {
 					iter1.next();
 				}
 			}
-			System.out.println("Punto central  :" + angulo);
+			Logger.getLogger("Punto central  :" + angulo);
 
 			if (iterAux1.hasNext()) {
 				derecho = iterAux1.next();
 			} else {
 				derecho = auxVertex.getFirst();
 			}
-			System.out.println("Punto derecho  :" + derecho);
+			Logger.getLogger("Punto derecho  :" + derecho);
 
 			// Comprobacion si el triangulo pertenece al poligono y sino
 			// contiene otros puntos de este
 			if (Triangulo.angulo(angulo, izquierdo, derecho) < 180) {
 				contenido.clear();
 				for (Iterator<Punto> iter = vertex.iterator(); iter.hasNext();) {
-					Punto punto = (Punto) iter.next();
+					Punto punto = iter.next();
 					if (!(punto.equals(derecho) || punto.equals(angulo) || punto.equals(izquierdo))
 							&& !eliminados.contains(punto)) {
 						contenido.add(punto);
 					}
 				}
-				if (contenido.size() == 0 && auxVertex.size() == 3) {
+				if (contenido.isEmpty() && auxVertex.size() == 3) {
 					trianguloSalida[contadorTriangulos++] = new Triangulo(izquierdo, angulo, derecho);
-					System.out.println(trianguloAniadidoOKToString());
+					Logger.getLogger(trianguloAniadidoOKToString());
 				} else {
 					int eliminar = 0;
 					for (Iterator<Punto> iter = contenido.iterator(); iter.hasNext();) {
-						Punto punto = (Punto) iter.next();
-						System.out.println(angulosTrianguloRestoVerticesToString());
-						System.out.println(Triangulo.angulo(izquierdo, punto, angulo));
-						System.out.println(Triangulo.angulo(angulo, punto, derecho));
-						System.out.println(Triangulo.angulo(derecho, punto, izquierdo));
+						Punto punto = iter.next();
+						Logger.getLogger(angulosTrianguloRestoVerticesToString());
+						Logger.getLogger(Double.toString(Triangulo.angulo(izquierdo, punto, angulo)));
+						Logger.getLogger(Double.toString(Triangulo.angulo(angulo, punto, derecho)));
+						Logger.getLogger(Double.toString(Triangulo.angulo(derecho, punto, izquierdo)));
 						if (Triangulo.angulo(izquierdo, punto, angulo) > 180
 								|| Triangulo.angulo(angulo, punto, derecho) > 180
 								|| Triangulo.angulo(derecho, punto, izquierdo) > 180) {
@@ -254,7 +253,7 @@ public class Triangulo {
 					if (eliminar == contenido.size()) {
 						trianguloSalida[contadorTriangulos++] = new Triangulo(izquierdo, angulo, derecho);
 						eliminados.add(angulo);
-						System.out.println(trianguloAniadidoOKToString());
+						Logger.getLogger(trianguloAniadidoOKToString());
 					} else {
 						vueltas++;
 					}
@@ -263,7 +262,7 @@ public class Triangulo {
 				vueltas++;
 			}
 		}
-		// return (Triangulo.arrayTriangulosToString(trianguloSalida));
+		
 		return trianguloSalida;
 	}
 
@@ -273,9 +272,10 @@ public class Triangulo {
 	 * @return
 	 */
 	public static String arrayTriangulosToString(Triangulo[] triangulos) {
-		String salida = "---------------------------------------------\n" + "La solucion es: \n"
-				+ "---------------------------------------------\n" + "Los triangulos son:\n"
-				+ "---------------------------------------------\n"
+		String constante= "---------------------------------------------\n";
+		String salida = constante + "La solucion es: \n"
+				+ constante + "Los triangulos son:\n"
+				+ constante
 				+ "***********************************************************************************\n";
 		for (int i = 0; i < triangulos.length; i++) {
 			salida += "***	" + triangulos[i].toString() + "	***\n";

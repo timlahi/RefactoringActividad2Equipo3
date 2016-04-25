@@ -4,7 +4,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 public class DoublyLinkedList<Item> implements Iterable<Item> {
-    private int N;        // number of elements on list
+    private int n;        // number of elements on list
     private Node pre;     // sentinel before first item
     private Node post;    // sentinel after last item
 
@@ -22,12 +22,14 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
         private Node prev;
     }
 
-    public boolean isEmpty()    { return N == 0; }
-    public int size()           { return N;      }
+    public boolean isEmpty()    { return n == 0; }
+    public int size()           { return n;      }
 
     // add the item to the list
     public boolean add(Item item) {
-    	if(this.contains(item)) return false;
+    	if(this.contains(item)) {
+    		return false;
+    	}
         Node last = post.prev;
         Node x = new Node();
         x.item = item;
@@ -35,7 +37,7 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
         x.prev = last;
         post.prev = x;
         last.next = x;
-        N++;
+        n++;
         return true;
     }
     
@@ -53,11 +55,13 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
     public boolean contains(Item item){
     	ListIterator<Item> it = this.iterator();
     	while(it.hasNext()){
-    		if(it.next().equals(item)) return true;
+    		if(it.next().equals(item)) {
+    			return true;
+    		}
     	}
     	return false;
     }
-
+    @Override
     public ListIterator<Item> iterator()  { return new DoublyLinkedListIterator(); }
 
     // assumes no calls to DoublyLinkedList.add() during iteration
@@ -66,23 +70,37 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
         private Node lastAccessed = null;      // the last node to be returned by prev() or next()
                                                // reset to null upon intervening remove() or add()
         private int index = 0;
-
-        public boolean hasNext()      { return index < N; }
+        
+        
+        @Override
+        public boolean hasNext()      { return index < n; }
+       
+        @Override
         public boolean hasPrevious()  { return index > 0; }
+       
+        @Override
+        
         public int previousIndex()    { return index - 1; }
+        
+        @Override
+        
         public int nextIndex()        { return index;     }
-
+        @Override
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
+            if (!hasNext()) {
+            	throw new NoSuchElementException();
+            }
             lastAccessed = current;
             Item item = current.item;
             current = current.next; 
             index++;
             return item;
         }
-
+        @Override
         public Item previous() {
-            if (!hasPrevious()) throw new NoSuchElementException();
+            if (!hasPrevious()) {
+            	throw new NoSuchElementException();
+            }
             current = current.prev;
             index--;
             lastAccessed = current;
@@ -91,20 +109,26 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
 
         // replace the item of the element that was last accessed by next() or previous()
         // condition: no calls to remove() or add() after last call to next() or previous()
+        @Override
         public void set(Item item) {
-            if (lastAccessed == null) throw new IllegalStateException();
+            if (lastAccessed == null) {
+            	throw new IllegalStateException();
+            }
             lastAccessed.item = item;
         }
 
         // remove the element that was last accessed by next() or previous()
         // condition: no calls to remove() or add() after last call to next() or previous()
+        @Override
         public void remove() { 
-            if (lastAccessed == null) throw new IllegalStateException();
+            if (lastAccessed == null) {
+            	throw new IllegalStateException();
+            }
             Node x = lastAccessed.prev;
             Node y = lastAccessed.next;
             x.next = y;
             y.prev = x;
-            N--;
+            n--;
             if (current == lastAccessed)
                 current = y;
             else
@@ -113,6 +137,8 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
         }
 
         // add element to list 
+       
+        @Override
         public void add(Item item) {
             Node x = current.prev;
             Node y = new Node();
@@ -122,13 +148,13 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
             y.next = z;
             z.prev = y;
             y.prev = x;
-            N++;
+            n++;
             index++;
             lastAccessed = null;
         }
 
     }
-
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (Item item : this)
@@ -146,7 +172,7 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
     
     @Override
     public Object clone(){
-    	DoublyLinkedList<Item> clon = new DoublyLinkedList<Item>();
+    	DoublyLinkedList<Item> clon = new DoublyLinkedList<>();
     	ListIterator<Item> it = this.iterator();
     	while(it.hasNext()){
     		clon.add(it.next());

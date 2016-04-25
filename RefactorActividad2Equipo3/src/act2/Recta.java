@@ -1,5 +1,6 @@
 package act2;
 import java.text.DecimalFormat;
+import java.util.logging.Logger;
 
 /**
  * @author frasco2001
@@ -9,21 +10,24 @@ public class Recta {
 	double coeficienteA;
 	double coeficienteB;
 	double coeficienteC;
-	final static double EPSILON = 0.00001;
+	static final double EPSILON = 0.00001;
 
 	/**
 	 * 
 	 * @param v
 	 * @param w
 	 */
+	
+
+	
 	public Recta(Punto v, Punto w) {
 		if (!v.equals(w)) {
-			if (v.getX() == w.getX()) {
+			if (igualdouble(v.getX(),w.getX())) {
 				this.coeficienteA = 1;
 				this.coeficienteB = 0;
 				this.coeficienteC = -v.getX();
 			} else {
-				if (v.getY() == w.getY()) {
+				if (igualdouble(v.getY(),w.getY())) {
 					this.coeficienteA = 0;
 					this.coeficienteB = 1;
 					this.coeficienteC = -v.getY();
@@ -93,24 +97,24 @@ public class Recta {
 	 */
 	public String ecuacionRecta() {
 		String salida = "La ecuacion de la Recta es: ";
-		if (this.coeficienteA != 0) {
-			if (this.coeficienteA == 1) {
+		if (!igualdouble(this.coeficienteA,0)) {
+			if (igualdouble(this.coeficienteA,1)) {
 				salida += "X";
 			} else {
-				if (this.coeficienteA == -1) {
+				if (igualdouble(this.coeficienteA,-1)) {
 					salida += "-X";
 				} else {
 					salida += new DecimalFormat("#.##").format(this.coeficienteA) + "*X";
 				}
 			}
 		}
-		if (this.coeficienteB != 0) {
-			if (this.coeficienteB == 1) {
-				if (this.coeficienteA != 0) {
+		if (!igualdouble(this.coeficienteB, 0)) {
+			if (igualdouble(this.coeficienteB,1)) {
+				if (!igualdouble(this.coeficienteA ,0)) {
 					salida += "+";
 				}
 			} else {
-				if (this.coeficienteB == -1) {
+				if (igualdouble(this.coeficienteB,-1)) {
 					salida += "-";
 				} else {
 					salida += "+" + new DecimalFormat("#.##").format(this.coeficienteB) + "*";
@@ -118,14 +122,14 @@ public class Recta {
 			}
 			salida += "Y";
 		}
-		if (this.coeficienteC != 0) {
+		if (!igualdouble(this.coeficienteC,0)) {
 			if (this.coeficienteC > 0) {
 				salida += "+";
 			}
 			salida += new DecimalFormat("#.##").format(this.coeficienteC);
 		}
 		salida += "=0";
-		System.out.println(salida);
+		Logger.getLogger(salida);
 		return salida;
 	}
 
@@ -136,8 +140,8 @@ public class Recta {
 	 * @return
 	 */
 	public static boolean sonParalelas(Recta primera, Recta segunda) {
-		if (primera.getCoeficienteA() / primera.getCoeficienteB() != segunda.getCoeficienteA()
-				/ segunda.getCoeficienteB()) {
+		if (!igualdouble(primera.getCoeficienteA() / primera.getCoeficienteB(), segunda.getCoeficienteA()
+				/ segunda.getCoeficienteB())) {
 			return false;
 		}
 		return true;
@@ -145,7 +149,7 @@ public class Recta {
 
 	public static Punto puntoCorte(Recta primera, Recta segunda) {
 		if (!sonParalelas(primera, segunda)) {
-			Punto puntoCorte = null;
+			Punto puntoCorte;
 			double x = 0.0;
 			double y = 0.0;
 			double parteZ1;
@@ -158,7 +162,7 @@ public class Recta {
 		
 			
 			
-			if (primera.getCoeficienteB() != 0.0 && segunda.coeficienteB != 0) {
+			if (!igualdouble(primera.getCoeficienteB(),0.0) && !igualdouble(segunda.coeficienteB,0)) {
 				parteZ1 = -primera.getCoeficienteC() / primera.getCoeficienteB();
 				parteZ2 = -primera.getCoeficienteA() / primera.getCoeficienteB();
 				componenteC = -segunda.getCoeficienteC()
@@ -208,7 +212,7 @@ public class Recta {
 
 	private static boolean igualdouble(double uno, double dos){
 		
-		return (Math.abs(uno - dos) < EPSILON);
+		return Math.abs(uno - dos) < EPSILON;
 		
 		
 		

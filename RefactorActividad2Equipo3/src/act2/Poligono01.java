@@ -8,6 +8,7 @@ import java.util.ListIterator;
  *
  */
 public class Poligono01 {
+	private static final double EPSILON = 0.000001;
 	Punto[] poligono;
 
 
@@ -17,6 +18,15 @@ public class Poligono01 {
 	 */
 	public Poligono01(Punto[] x) {
 		this.poligono = x;
+	}
+	
+	
+private static boolean igualdouble(double uno, double dos){
+		
+		return Math.abs(uno - dos) < EPSILON;
+		
+		
+		
 	}
 
 	/**
@@ -39,7 +49,9 @@ public class Poligono01 {
 		String salida = "ES POLIGONO";
 		String flagNoVertices = "";
 		int contador = 0;
-		Punto vertice, izquierdo, derecho;
+		Punto vertice;
+		Punto izquierdo;
+		Punto derecho;
 		for (int i = 0; i < z.length; i++) {
 			vertice = z[i];
 			if (i == 0) {
@@ -103,7 +115,7 @@ public class Poligono01 {
 					signo = resultado;
 				}
 			}
-			if (i != 0 && i != z.length - 1 && resultado == 0) {
+			if (i != 0 && i != z.length - 1 && igualdouble(resultado,0) {
 				salida = true;
 			}
 		}
@@ -153,7 +165,7 @@ public class Poligono01 {
 		}
 		x = x / (6 * area);
 		y = y / (6 * area);
-		return (new Punto(x, y));
+		return new Punto(x, y);
 	}
 
 	/**
@@ -205,10 +217,10 @@ public class Poligono01 {
 		int contador2 = 0;
 		ListIterator<Punto> iter1 = lista1.listIterator();
 		while (iter1.hasNext()) {
-			Punto uno = (Punto) iter1.next();
+			Punto uno = iter1.next();
 			Punto dos = new Punto(0, 0);
 			if (iter1.hasNext()) {
-				dos = (Punto) iter1.next();
+				dos = iter1.next();
 				iter1.previous();
 			} else {
 				dos = PrimerPunto;
@@ -216,10 +228,10 @@ public class Poligono01 {
 			ListIterator<Punto> iter2 = lista1.listIterator();
 			Recta primera = new Recta(uno, dos);
 			while (iter2.hasNext()) {
-				Punto tres = (Punto) iter2.next();
+				Punto tres = iter2.next();
 				Punto cuatro = new Punto(0, 0);
 				if (iter2.hasNext()) {
-					cuatro = (Punto) iter2.next();
+					cuatro = iter2.next();
 					iter2.previous();
 				} else {
 					cuatro = PrimerPunto;

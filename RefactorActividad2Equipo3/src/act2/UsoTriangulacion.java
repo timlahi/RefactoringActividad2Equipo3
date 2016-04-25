@@ -1,7 +1,10 @@
 package act2;
 import java.util.LinkedList;
+import java.util.logging.Logger;
+
 import javax.swing.JFrame;
-import utils.lector;
+
+import utils.Lector;
 
 /**
  * @author frasco2001
@@ -9,6 +12,10 @@ import utils.lector;
  */
 public class UsoTriangulacion {
 
+	
+	private UsoTriangulacion() {
+
+	}
 	/**
 	 * @param args
 	 */
@@ -17,28 +24,28 @@ public class UsoTriangulacion {
 
 		// Variable con los vertices del poligono
 		Punto[] vertices;
-		Triangulo[] salida = null;
+		Triangulo[] salida;
 
 		// Peticion por pantalla del numero de vertices que tendra el poligono
-		System.out.println("**** Este programa realiza la triangulación de un poligono regular,"
+		Logger.getLogger("**** Este programa realiza la triangulación de un poligono regular,"
 				+ " concavo o convexo, sin aristas que intersecten.\n");
-		System.out.println("**** Introduzca el numero de vertices del poligono: \n");
+		Logger.getLogger("**** Introduzca el numero de vertices del poligono: \n");
 		
-		vertices = new Punto[lector.leerEntero()];
+		vertices = new Punto[Lector.leerEntero()];
 
 		// Peticion por pantalla de los vertices del poligono
-		System.out.println("**** Introduce los vertices del poligono de forma correlativa,"
+		Logger.getLogger("**** Introduce los vertices del poligono de forma correlativa,"
 				+ " en el sentido contrario a las agujas del reloj\n");
 		for (int i = 0; i < vertices.length; i++) {
-			System.out.println("* Introduce abcisa punto " + (i + 1) + ":");
-			double abcisa = lector.leerDouble();
-			System.out.println("* Introduce ordenada punto " + (i + 1) + ":");
-			double ordenada = lector.leerDouble();
+			Logger.getLogger("* Introduce abcisa punto " + (i + 1) + ":");
+			double abcisa = Lector.leerDouble();
+			Logger.getLogger("* Introduce ordenada punto " + (i + 1) + ":");
+			double ordenada = Lector.leerDouble();
 			Punto nuevo = new Punto(abcisa, ordenada);
 			vertices[i] = nuevo;
 		}
 		Poligono01 nuevo = new Poligono01(vertices);
-		System.out.println(nuevo.toString()+"\n");
+		Logger.getLogger(nuevo.toString()+"\n");
 
 		
 		// Inicio del proceso de triangulacion
@@ -46,35 +53,33 @@ public class UsoTriangulacion {
 			
 			// Ejercicio nº1
 			//---------------
+			
+			String constante= "***********************************************\n";
 			if (Poligono01.esConcavo(vertices)){
-				System.out.println("***********************************************\n"+
+				Logger.getLogger(constante+
 								   "***		POLIGONO CONCAVO  	    ***\n"+
-								   "***********************************************");
+								   constante);
 			} else {
-				System.out.println("***********************************************\n"+
+				Logger.getLogger(constante+
 						   "***		POLIGONO CONVEXO  	    ***\n"+
-						   "***********************************************\n");
+						   constante);
 			}
-			// Ejercicio nº2
-			//---------------
-			// Salida por pantalla de los angulos de los segmentos que forman el
-			// poligono
-			//System.out.println(Poligono01.angulosPoligonoToString(vertices));
+			
 			LinkedList<Punto>cortes = Poligono01.seIntersectanAristas(vertices);
-			System.out.println("\nAristas Secantes: " + cortes.size()+"\n");
-			if(cortes.size()==0){
+			Logger.getLogger("\nAristas Secantes: " + cortes.size()+"\n");
+			if(cortes.isEmpty()){
 				
 				// Ejercicio nº3
 				//---------------
-				System.out.println("***********************************************************\n"+
+				Logger.getLogger("***********************************************************\n"+
 						   "***	CENTROIDE DEL POLIGONO	"+Poligono01.centroidePoligono(vertices)+"	***\n"+
 						   "***********************************************************\n");				
 				// Salida por pantalla de la solucion de la triangulacion del poligono
-				System.out.println(Poligono01.noSeIntersectan());
+				Logger.getLogger(Poligono01.noSeIntersectan());
 				// Salida por pantalla del area del poligono
-				System.out.println(Poligono01.areaPoligonoToString(vertices));
+				Logger.getLogger(Poligono01.areaPoligonoToString(vertices));
 				salida = Triangulo.triangulacionPoligono(vertices);
-				System.out.println(Triangulo.arrayTriangulosToString(salida));
+				Logger.getLogger(Triangulo.arrayTriangulosToString(salida));
 				
 				// crea marco para objeto PoligonosJPanel
 				JFrame marco = new JFrame("Dibujo de poligonos");
@@ -85,10 +90,10 @@ public class UsoTriangulacion {
 				marco.setSize(400, 400); // establece el tamaño del marco
 				marco.setVisible(true); // muestra el marco
 			} else {
-				System.out.println("**** No se pueden cortar las aristas del poligono para calcular los triangulos ****");
+				Logger.getLogger("**** No se pueden cortar las aristas del poligono para calcular los triangulos ****");
 			}
 		} else {
-			System.out.println("**** No es un poligono ****");
+			Logger.getLogger("**** No es un poligono ****");
 			
 		}
 	}

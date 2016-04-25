@@ -1,16 +1,20 @@
 package utils;
 import java.util.Scanner;
 
-public class lector {
+public class Lector{
+	
+	private Lector(){
+		
+	}
 
-	private static Scanner lector = new Scanner(System.in);
+	private static Scanner lectorcito = new Scanner(System.in);
 
 	/**
 	 * 
 	 * @return
 	 */
 	public static double leerDouble() {
-		return lector.nextDouble();
+		return lectorcito.nextDouble();
 	}
 
 	/**
@@ -18,6 +22,6 @@ public class lector {
 	 * @return
 	 */
 	public static int leerEntero() {
-		return lector.nextInt();
+		return lectorcito.nextInt();
 	}
 }

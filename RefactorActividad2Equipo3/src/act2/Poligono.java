@@ -3,6 +3,7 @@ package act2;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.logging.Logger;
 
 import javafx.scene.canvas.GraphicsContext;
 import utils.DoublyLinkedList;
@@ -17,18 +18,18 @@ public class Poligono {
 	}
 	
 	public Poligono(Punto[] x) {
-		this.vertices = new DoublyLinkedList<Punto>();
+		this.vertices = new DoublyLinkedList<>();
 		for(Punto punto: x){
 			this.vertices.add(punto);
 		}
 	}
 	
 	public Poligono(){
-		this.vertices = new DoublyLinkedList<Punto>();
+		this.vertices = new DoublyLinkedList<>();
 	}
 	
 	public static boolean esPoligono(Punto[] z) {
-		if (seraPoligono(z).equals("ES POLIGONO"))
+		if ("ES POLIGONO".equals(seraPoligono(z)))
 			return true;
 		return false;
 	}
@@ -52,9 +53,9 @@ public class Poligono {
 			} else {
 				derecho = z[i + 1];
 			}
-			// Triangulo puntos3 = new Triangulo(izquierdo, vertice, derecho);
+
 			double angulo = Triangulo.angulo(vertice, izquierdo, derecho);
-			if (angulo == 180) {
+			if (igualdouble(angulo,180)) {
 				flagNoVertices += vertice.toString() + " no es un vertice.\n";
 			} else {
 				contador++;
@@ -69,9 +70,19 @@ public class Poligono {
 		return salida;
 	}
 	
+	static final double EPSILON = 0.00001;
+	
+private static boolean igualdouble(double uno, double dos){
+		
+		return Math.abs(uno - dos) < EPSILON;
+		
+		
+		
+	}
+	
 	public static boolean esConcavo(Punto[] z) {
 		boolean salida = false;
-		double resultado =0;  
+		double resultado;  
 		double signo = 0;
 		Punto a; 
 		Punto b;
@@ -82,11 +93,11 @@ public class Poligono {
 			else
 				b = z[i + 1];
 			resultado = (a.getX() * b.getY()) - (a.getY() * b.getX());
-			//System.out.println(resultado);
+
 			if (i == 0) {
 				signo = resultado;
 			} else {
-				if (signo != 0) {
+				if (!igualdouble(signo, 0)) {
 					if (signo > 0 && resultado < 0) {
 						salida = true;
 					} else {
@@ -98,7 +109,7 @@ public class Poligono {
 					signo = resultado;
 				}
 			}
-			if (i != 0 && i != z.length - 1 && resultado == 0) {
+			if (i != 0 && i != z.length - 1 && igualdouble(resultado,0)) {
 				salida = true;
 			}
 		}
@@ -148,7 +159,7 @@ public class Poligono {
 		}
 		x = x / (6 * area);
 		y = y / (6 * area);
-		return (new Punto(x, y));
+		return new Punto(x, y);
 	}
 
 	/**
@@ -166,34 +177,34 @@ public class Poligono {
 	 * @return
 	 */
 	public static LinkedList<Punto> seIntersectanAristas(Punto[] vertices) {
-		LinkedList<Punto> lista1 = new LinkedList<Punto>();
-		LinkedList<Punto> solucion = new LinkedList<Punto>();
+		LinkedList<Punto> lista1 = new LinkedList<>();
+		LinkedList<Punto> solucion = new LinkedList<>();
 		for (int i = 0; i < vertices.length; i++) {
 			lista1.add(vertices[i]);
 		}
-		Punto PrimerPunto = vertices[0];
+		Punto primerpunto = vertices[0];
 		int contador1 = 0;
 		int contador2 = 0;
 		ListIterator<Punto> iter1 = lista1.listIterator();
 		while (iter1.hasNext()) {
-			Punto uno = (Punto) iter1.next();
+			Punto uno = iter1.next();
 			Punto dos = new Punto(0, 0);
 			if (iter1.hasNext()) {
-				dos = (Punto) iter1.next();
+				dos = iter1.next();
 				iter1.previous();
 			} else {
-				dos = PrimerPunto;
+				dos = primerpunto;
 			}
 			ListIterator<Punto> iter2 = lista1.listIterator();
 			Recta primera = new Recta(uno, dos);
 			while (iter2.hasNext()) {
-				Punto tres = (Punto) iter2.next();
+				Punto tres = iter2.next();
 				Punto cuatro = new Punto(0, 0);
 				if (iter2.hasNext()) {
-					cuatro = (Punto) iter2.next();
+					cuatro = iter2.next();
 					iter2.previous();
 				} else {
-					cuatro = PrimerPunto;
+					cuatro = primerpunto;
 				}
 				if (tres.equals(uno) || tres.equals(dos) || cuatro.equals(uno) || cuatro.equals(dos)) {
 					contador2++;
@@ -201,14 +212,20 @@ public class Poligono {
 				}
 				Recta segunda = new Recta(tres, cuatro);
 				if (Recta.sonParalelas(primera, segunda)) {
-					System.out
-							.println("Los segmentos [" + (contador1 + 1) + "] y [" + (++contador2) + "] son paralelos");
+					Logger.getLogger("Los segmentos [" + (contador1 + 1) + "] y [" + (++contador2) + "] son paralelos");
 				} else {
-					// primera.ecuacionRecta();
-					// segunda.ecuacionRecta();
+
+					
 					Punto corte = Recta.puntoCorte(primera, segunda);
-					if (primera.getCoeficienteA() * corte.getX() + primera.getCoeficienteB() * corte.getY()
-							+ primera.getCoeficienteC() == 0) {
+					if (igualdouble(primera.getCoeficienteA() * corte.getX() + primera.getCoeficienteB() * corte.getY()
+							+ primera.getCoeficienteC(),0)) {
+						
+						
+						
+				
+						
+						
+						
 						if (Math.min(uno.getX(), dos.getX()) <= corte.getX()
 								&& corte.getX() <= Math.max(uno.getX(), dos.getX())
 								&& Math.min(uno.getY(), dos.getY()) <= corte.getY()
@@ -218,9 +235,9 @@ public class Poligono {
 								&& Math.min(tres.getY(), cuatro.getY()) <= corte.getY()
 								&& corte.getY() <= Math.max(tres.getY(), cuatro.getY())) {
 							if (!(corte.equals(tres) || corte.equals(cuatro))) {
-								System.out.println("El segmento [" + (contador1 + 1) + "] se corta con el segmento ["
+								Logger.getLogger("El segmento [" + (contador1 + 1) + "] se corta con el segmento ["
 										+ (++contador2) + "]");
-								System.out.println(corte.toString());
+								Logger.getLogger(corte.toString());
 								if (!solucion.contains(corte)){
 									solucion.add(corte);
 								}
@@ -282,13 +299,14 @@ public class Poligono {
 	}
 	
 	public boolean addVertice(Punto p){
-		if(this.vertices.size() >= MAX) return false;
+		if(this.vertices.size() >= MAX) 
+			return false;
 		this.vertices.add(p);
 		return true;
 	}
 	
 	public LinkedList<Punto[]> triangulacion(){
-		LinkedList<Punto[]> triangulos = new LinkedList<Punto[]>();
+		LinkedList<Punto[]> triangulos = new LinkedList<>();
 		DoublyLinkedList<Punto> verticesC = (DoublyLinkedList<Punto>)vertices.clone();
 		ListIterator<Punto> it = verticesC.iterator();
 		ListIterator<Punto> itAux;
@@ -299,7 +317,9 @@ public class Poligono {
 		boolean triangle;
 		while(verticesC.size() != 3){
 			triangle = true;
-			if(!it.hasNext()) it = verticesC.iterator();
+			if(!it.hasNext()) {
+				it = verticesC.iterator();
+			}
 			current = it.next();
 			it.previous();
 			if(!it.hasPrevious()){
@@ -311,22 +331,30 @@ public class Poligono {
 				it.next();
 				it.next();
 			}
-			if(!it.hasNext()) dch = verticesC.getFirts();
+			if(!it.hasNext()) {
+				dch = verticesC.getFirts();
+			}
 			else{
 				dch = it.next();
 				it.previous();
 			}
-			if(!this.area_triangulo_signo(izq, current, dch)) continue;
+			if(!this.areaTrianguloSigno(izq, current, dch)) {
+				continue;
+			}
 			itAux = verticesC.iterator();
 			while(itAux.hasNext()){
 				aux = itAux.next();
-				if(aux.equals(izq) || aux.equals(dch) || aux.equals(current)) continue;
-				if(this.area_triangulo_signo(izq, current, aux) && this.area_triangulo_signo(current, dch, aux) && this.area_triangulo_signo(dch, izq, aux)){
+				if(aux.equals(izq) || aux.equals(dch) || aux.equals(current)) {
+					continue;
+				}
+				if(this.areaTrianguloSigno(izq, current, aux) && this.areaTrianguloSigno(current, dch, aux) && this.areaTrianguloSigno(dch, izq, aux)){
 					triangle = false;
 					break;
 				}
 			}
-			if(!triangle) continue;
+			if(!triangle) {
+				continue;
+			}
 			Punto[] triangulo = {izq, current, dch};
 			triangulos.add(triangulo);
 			it.previous();
@@ -338,9 +366,14 @@ public class Poligono {
 		return triangulos;
 	}
 	
-	private boolean area_triangulo_signo(Punto a, Punto b, Punto c){
-		if((((a.getX()*b.getY())-(a.getY()*b.getX())+(a.getY()*c.getX())-(a.getX()*c.getY())+(b.getX()*c.getY())-(c.getX()*b.getY()))/2.0) <= 0) return false;
-		return true;
+	private boolean areaTrianguloSigno(Punto a, Punto b, Punto c){
+		if((((a.getX()*b.getY())-(a.getY()*b.getX())+(a.getY()*c.getX())-(a.getX()*c.getY())+(b.getX()*c.getY())-(c.getX()*b.getY()))/2.0) <= 0) {
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 	
 	public Punto[] toArray(){
@@ -372,7 +405,7 @@ public class Poligono {
 	 * @param poligono
 	 */
 	public void setPoligono(Punto[] poligono) {
-		this.vertices = new DoublyLinkedList<Punto>();
+		this.vertices = new DoublyLinkedList<>();
 		for(Punto punto: poligono){
 			this.vertices.add(punto);
 		}

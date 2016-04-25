@@ -1,5 +1,7 @@
 package act2;
 import java.util.Scanner;
+import java.util.logging.Logger;
+
 import javax.swing.JFrame;
 
 /**
@@ -9,7 +11,7 @@ import javax.swing.JFrame;
 public class UsoPoligono01 {
 	
 	
-	public UsoPoligono01(){
+	private UsoPoligono01(){
 		
 	}
 
@@ -21,15 +23,15 @@ public class UsoPoligono01 {
 	public static void main(String[] args) {
 
 		// Peticiones por pantalla
-		System.out.println("Introduce el numero de vertices del poligono (minimo 4 puntos):");
+		Logger.getLogger("Introduce el numero de vertices del poligono (minimo 4 puntos):");
 		int puntos = leerEntero();
 		Punto[] vertices = new Punto[puntos];
-
-		System.out.println("Introduce los puntos de forma correlativa en el sentido contrario a las agujas del reloj");
+		
+		Logger.getLogger("Introduce los puntos de forma correlativa en el sentido contrario a las agujas del reloj");
 		for (int i = 0; i < vertices.length; i++) {
-			System.out.println("Introduce abcisa punto " + (i + 1) + ":");
+			Logger.getLogger("Introduce abcisa punto " + (i + 1) + ":");
 			double abcisa = leerDouble();
-			System.out.println("Introduce ordenada punto " + (i + 1) + ":");
+			Logger.getLogger("Introduce ordenada punto " + (i + 1) + ":");
 			double ordenada = leerDouble();
 			Punto nuevo = new Punto(abcisa, ordenada);
 			vertices[i] = nuevo;
@@ -37,20 +39,22 @@ public class UsoPoligono01 {
 		Poligono01 poligono = new Poligono01(vertices);
 
 		// Soluciones
+		
+		
 
 		// (ES POlIGONO)
 		if (Poligono01.esPoligono(vertices)) {
 			// (AREA)
-			System.out.println("El area del poligono es: ");
-			System.out.println(Poligono01.areaPoligono(vertices));
+			Logger.getLogger("El area del poligono es: ");
+			Logger.getLogger(Double.toString(Poligono01.areaPoligono(vertices)));
 			// (CENTROIDE)
-			System.out.println("El centroide del poligono es el punto: ");
-			System.out.println(Poligono01.centroidePoligono(vertices));
+			Logger.getLogger("El centroide del poligono es el punto: ");
+			Logger.getLogger(""+Poligono01.centroidePoligono(vertices));
 			// (CONCAVIDAD)
-			System.out.println("¿Es Concavo el poligono?");
-			System.out.println(Poligono01.esConcavo(vertices));
+			Logger.getLogger("¿Es Concavo el poligono?");
+			Logger.getLogger(Boolean.toString(Poligono01.esConcavo(vertices)));
 			// (PUNTOS DEL POLIGONO)
-			System.out.println(poligono);
+			Logger.getLogger(""+poligono);
 
 			// crea marco para objeto PoligonosJPanel
 			JFrame marco = new JFrame("Dibujo de poligonos");
@@ -61,8 +65,16 @@ public class UsoPoligono01 {
 			marco.setSize(400, 400); // establece el tamaño del marco
 			marco.setVisible(true); // muestra el marco
 		} else {
-			System.out.println(Poligono01.seraPoligono(vertices));
+			Logger.getLogger(Poligono01.seraPoligono(vertices));
 		}
+	}
+
+	public static Scanner getLector() {
+		return lector;
+	}
+
+	public static void setLector(Scanner lector) {
+		UsoPoligono01.lector = lector;
 	}
 
 	/**

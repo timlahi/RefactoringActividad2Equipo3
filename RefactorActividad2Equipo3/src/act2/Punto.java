@@ -5,8 +5,9 @@ package act2;
  */
 public class Punto {
 
-	double x, y;
-	final static double EPSILON = 0.00001;
+	double x;
+	double y;
+	static final double EPSILON = 0.00001;
 
 	/**
 	 * 
@@ -16,7 +17,7 @@ public class Punto {
 	
 private static boolean igualdouble(double uno, double dos){
 		
-		return (Math.abs(uno - dos) < EPSILON);
+		return Math.abs(uno - dos) < EPSILON;
 		
 		
 		

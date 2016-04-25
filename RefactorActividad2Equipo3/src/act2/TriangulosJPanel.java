@@ -15,7 +15,8 @@ public class TriangulosJPanel extends JPanel {
 	Polygon[] poligonos;
 	Graphics g;
 	Punto[] puntos;
-	double minX = Double.MAX_VALUE, minY = Double.MAX_VALUE;
+	double minX = Double.MAX_VALUE;
+	double minY = Double.MAX_VALUE;
 
 	public TriangulosJPanel(Triangulo[] triangulos) {
 		poligonos = new Polygon[triangulos.length];	
@@ -67,10 +68,11 @@ public class TriangulosJPanel extends JPanel {
 	/**
 	 * 
 	 */
+	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g); // llama al método paintComponent de la
-									// superclase
-		// dibuja polígono
+		super.paintComponent(g); 
+	
+		
 		g.setColor(Color.RED);
 		for (int i = 0; i < poligonos.length; i++) {
 			g.drawPolygon(poligonos[i]);

@@ -2,6 +2,8 @@ package act2;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
+import java.util.logging.Logger;
+
 import javax.swing.JPanel;
 
 /**
@@ -22,8 +24,9 @@ public class PoligonosJPanel extends JPanel {
 	 */
 	public PoligonosJPanel(Punto[] vertices) {
 		this.poligono1 = new Polygon();	
-		double minX=Double.MAX_VALUE ,minY=Double.MAX_VALUE;
-		System.out.println(minX+" "+minY);
+		double minX=Double.MAX_VALUE ;
+		double minY=Double.MAX_VALUE;
+		Logger.getLogger(minX+" "+minY);
 		for (int i = 0; i < vertices.length; i++) {
 			Punto a = vertices[i];
 			if(a.getX()<minX){
@@ -48,11 +51,11 @@ public class PoligonosJPanel extends JPanel {
 	/**
 	 * 
 	 */
+	
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g); 
-		// llama al método paintComponent de la
-		// superclase
-		// dibuja polígono
+	
 		g.setColor(Color.RED);
 		g.drawPolygon(poligono1);
 	}

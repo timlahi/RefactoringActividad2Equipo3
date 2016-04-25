@@ -1,8 +1,8 @@
 package ui;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.LinkedList;
+
+
 
 import act2.Poligono;
 import act2.Punto;
@@ -25,6 +25,7 @@ public class PoligonoController {
 	private GraphicsContext gc;
 	private Recta linea1;
 	private Recta linea2;
+	static final double EPSILON = 0.00001;
 	
 	@FXML private Button addpoitnButton;
 	@FXML private Canvas poligonoCanvas;
@@ -94,12 +95,17 @@ public class PoligonoController {
 			Punto p = new Punto(x, y);
 			this.poligono.addVertice(p);
 			this.poligonoArray = poligono.toArray();
-			if(Poligono.esPoligono(this.poligonoArray)) this.operaciones();
+			if(Poligono.esPoligono(this.poligonoArray)) {
+				this.operaciones();
+				}
 			else{
 				gc.clearRect(0, 0, poligonoCanvas.getWidth(), poligonoCanvas.getHeight());
 				poligono.draw(gc);
 			}
-		}catch(Exception e){}
+		}catch(Exception e){
+			
+			 throw new RuntimeException(e);
+		}
 		
 	}
 	
@@ -116,7 +122,9 @@ public class PoligonoController {
 		drawTriangulos(triangulos);
 		poligono.draw(gc);
 		poligonoArray = poligono.toArray();
-		if(Poligono.esConcavo(poligonoArray)) concavoInput.setText("Polígono concavo");
+		if(Poligono.esConcavo(poligonoArray)) {
+			concavoInput.setText("Polígono concavo");
+		}
 		else concavoInput.setText("Polígono convexo");
 		Punto centroide = Poligono.centroidePoligono(poligonoArray);
 		centroideInput.setText("Centroide en " + centroide.toString());
@@ -195,16 +203,20 @@ public class PoligonoController {
 			        	ecq2.setText(linea2.ecuacionRecta());
 			        }
 			    } else if (evt.getSource().equals(btnr1c5) || evt.getSource().equals(btnr2c5)) {
-			    	double x, y;
+			    	double x;
+			    	double y;
 					boolean eje = false;
-					if(c5Abcisa.getText().equals("") && c5Ordenada.getText().equals("")) return;
-			    	if(c5Abcisa.getText().equals("")){
+					if("".equals(c5Abcisa.getText()) && "".equals(c5Ordenada.getText())) {
+						return;
+					}
+			    	if("".equals(c5Abcisa.getText())){
 			    		x = 0;		
 			    	}else x = Double.parseDouble(c5Abcisa.getText());
-			    	if(c5Ordenada.getText().equals("")){
+			    	if("".equals(c5Ordenada.getText())){
 			    		y = 0;
 			    	}else y = Double.parseDouble(c5Ordenada.getText());
-					if(x==0) eje = true;
+					if(igualdouble(x,0)) 
+						{eje = true;}
 			    	Punto p = new Punto(x, y);
 			    	c5Abcisa.setText("");
 			        c5Ordenada.setText("");
@@ -217,14 +229,26 @@ public class PoligonoController {
 			        }
 			    }
 		        intersectan();
-	    	}catch(Exception e){}
+	    	}catch(Exception e){
+	    		 throw new RuntimeException(e);
+	    	}
 	    }
 
 		private void intersectan() {
 			if(linea1 != null && linea2 != null){
-				if(Recta.sonParalelas(linea1, linea2)) pCorte.setText("Lineas paralelas");
+				if(Recta.sonParalelas(linea1, linea2)) {
+					pCorte.setText("Lineas paralelas");
+				}
 				else pCorte.setText("Se cortan en " + Recta.puntoCorte(linea1, linea2).toString());
 			}
+			
+		}
+		
+		private boolean igualdouble(double uno, double dos){
+			
+			return Math.abs(uno - dos) < EPSILON;
+			
+			
 			
 		}
 	}
