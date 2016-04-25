@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.canvas.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="641.0" prefWidth="669.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.PoligonoController">
+   <children>
+      <TabPane layoutX="58.0" layoutY="89.0" prefHeight="641.0" prefWidth="669.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Polígono">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Canvas fx:id="poligonoCanvas" height="473.0" layoutX="14.0" layoutY="125.0" width="641.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="125.0" />
+                        <Button id="clear" fx:id="clear" layoutX="181.0" layoutY="90.0" mnemonicParsing="false" onAction="#clearPoligono" prefHeight="25.0" prefWidth="69.0" text="Limpiar" AnchorPane.leftAnchor="181.0" AnchorPane.topAnchor="90.0" />
+                        <TextField id="yInput" fx:id="yInput" layoutX="293.0" layoutY="57.0" prefHeight="25.0" prefWidth="96.0" promptText="Y" AnchorPane.leftAnchor="293.0" AnchorPane.topAnchor="57.0" />
+                        <Button id="addPoint" fx:id="addPointButton" layoutX="398.0" layoutY="57.0" mnemonicParsing="false" onAction="#addPoint" prefHeight="25.0" prefWidth="93.0" text="Añadir punto" AnchorPane.leftAnchor="398.0" AnchorPane.topAnchor="57.0" />
+                        <TextField id="xInput" layoutX="181.0" layoutY="57.0" prefHeight="25.0" prefWidth="96.0" promptText="X" AnchorPane.leftAnchor="181.0" AnchorPane.topAnchor="57.0" fx:id="xInput" />
+                        <Text layoutX="179.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nuevo punto:" wrappingWidth="72.84375" AnchorPane.leftAnchor="179.0" AnchorPane.topAnchor="31.0" />
+                        <Text fx:id="centroideInput" layoutX="440.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.13671875" />
+                        <Text fx:id="concavoInput" layoutX="277.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.13671875" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Linea">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Line endX="1000.0" layoutY="501.0" />
+                        <TextField fx:id="c1x1" layoutX="173.0" layoutY="74.0" prefHeight="25.0" prefWidth="83.0" promptText="X1" />
+                        <TextField fx:id="c1y1" layoutX="260.0" layoutY="74.0" prefHeight="25.0" prefWidth="83.0" promptText="Y1" />
+                        <TextField fx:id="c1y2" layoutX="260.0" layoutY="105.0" prefHeight="25.0" prefWidth="83.0" promptText="Y2" />
+                        <TextField fx:id="c1x2" layoutX="173.0" layoutY="105.0" prefHeight="25.0" prefWidth="83.0" promptText="X2" />
+                        <Button fx:id="btnr1c1" layoutX="363.0" layoutY="97.0" mnemonicParsing="false" text="Crear Recta 1" />
+                        <Text layoutX="173.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dados 2 puntos:" />
+                        <Text layoutX="171.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dados la pendiente y la ordenada en el origen:" />
+                        <TextField fx:id="c2Origen" layoutX="258.0" layoutY="153.0" prefHeight="25.0" prefWidth="83.0" promptText="Origen" />
+                        <TextField fx:id="c2Pendiente" layoutX="171.0" layoutY="153.0" prefHeight="25.0" prefWidth="83.0" promptText="Pendiente" />
+                        <Button fx:id="btnr1c2" layoutX="363.0" layoutY="153.0" mnemonicParsing="false" text="Crear Recta 1" />
+                        <Text layoutX="171.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dados la pendiente y un punto:" />
+                        <Button fx:id="btnr1c3" layoutX="363.0" layoutY="243.0" mnemonicParsing="false" text="Crear Recta 1" />
+                        <TextField fx:id="c3x" layoutX="171.0" layoutY="243.0" prefHeight="25.0" prefWidth="83.0" promptText="X" />
+                        <TextField fx:id="c3y" layoutX="258.0" layoutY="243.0" prefHeight="25.0" prefWidth="83.0" promptText="Y" />
+                        <TextField fx:id="c3Pendiente" layoutX="171.0" layoutY="212.0" prefHeight="25.0" prefWidth="170.0" promptText="Pendiente" />
+                        <Button fx:id="btnr1c4" layoutX="363.0" layoutY="353.0" mnemonicParsing="false" text="Crear Recta 1" />
+                        <TextField fx:id="c4a" layoutX="171.0" layoutY="317.0" prefHeight="25.0" prefWidth="83.0" promptText="a" />
+                        <TextField fx:id="c4b" layoutX="258.0" layoutY="317.0" prefHeight="25.0" prefWidth="83.0" promptText="b" />
+                        <Text layoutX="171.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dados los coeficientes a, b y c del polinomio de su representación implícita:" wrappingWidth="305.10546875" />
+                        <TextField fx:id="c4c" layoutX="349.0" layoutY="317.0" prefHeight="25.0" prefWidth="83.0" promptText="c" />
+                        <Button fx:id="btnr1c5" layoutX="363.0" layoutY="408.0" mnemonicParsing="false" text="Crear Recta 1" />
+                        <TextField fx:id="c5Abcisa" layoutX="171.0" layoutY="408.0" prefHeight="25.0" prefWidth="83.0" promptText="Abcisa" />
+                        <TextField fx:id="c5Ordenada" layoutX="258.0" layoutY="408.0" prefHeight="25.0" prefWidth="83.0" promptText="Ordenada" />
+                        <Text layoutX="171.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dado un valor de abcisa u ordenada:" />
+                        <Button fx:id="btnr2c4" layoutX="468.0" layoutY="353.0" mnemonicParsing="false" text="Crear Recta 2" />
+                        <Button fx:id="btnr2c3" layoutX="468.0" layoutY="243.0" mnemonicParsing="false" text="Crear Recta 2" />
+                        <Button fx:id="btnr2c2" layoutX="468.0" layoutY="153.0" mnemonicParsing="false" text="Crear Recta 2" />
+                        <Button fx:id="btnr2c1" layoutX="468.0" layoutY="97.0" mnemonicParsing="false" text="Crear Recta 2" />
+                        <Text fx:id="pCorte" layoutX="300.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Text fx:id="ecq1" layoutX="20.0" layoutY="489.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Text fx:id="ecq2" layoutX="352.0" layoutY="489.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Button fx:id="btnr2c5" layoutX="468.0" layoutY="408.0" mnemonicParsing="false" text="Crear Recta 2" />
+                        <Text layoutX="20.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recta 1:" />
+                        <Text layoutX="352.0" layoutY="464.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recta 2:" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
