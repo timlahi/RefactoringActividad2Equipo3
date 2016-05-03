@@ -88,30 +88,22 @@ private static boolean igualdouble(double uno, double dos){
 		Punto b;
 		for (int i = 0; i < z.length; i++) {
 			a = z[i];
-			if (z.length - i == 1)
-				b = z[0]; // circular
-			else
-				b = z[i + 1];
+			
+				b = (z.length - i == 1)? z[0]:z[i + 1]; // circular
+			
 			resultado = (a.getX() * b.getY()) - (a.getY() * b.getX());
 
 			if (i == 0) {
 				signo = resultado;
 			} else {
-				if (!igualdouble(signo, 0)) {
-					if (signo > 0 && resultado < 0) {
-						salida = true;
-					} else {
-						if (signo < 0 && resultado > 0) {
-							salida = true;
-						}
-					}
-				} else {
-					signo = resultado;
-				}
+				if (!igualdouble(signo, 0)) 
+				salida=(signo > 0 && resultado < 0)? true:(signo < 0 && resultado > 0)? true:salida;
+				else signo = resultado;
+				
 			}
-			if (i != 0 && i != z.length - 1 && igualdouble(resultado,0)) {
-				salida = true;
-			}
+			
+		salida = (i != 0 && i != z.length - 1 && igualdouble(resultado,0))?true:salida;
+			
 		}
 		return salida;
 	}
@@ -228,11 +220,11 @@ private static boolean igualdouble(double uno, double dos){
 						
 						if (Math.min(uno.getX(), dos.getX()) <= corte.getX()
 								&& corte.getX() <= Math.max(uno.getX(), dos.getX())
-								&& Math.min(uno.getY(), dos.getY()) <= corte.getY()
-								&& corte.getY() <= Math.max(uno.getY(), dos.getY())
+								&& Math.min(uno.getY(), dos.getY()) <= corte.getY())
+							if(corte.getY() <= Math.max(uno.getY(), dos.getY())
 								&& Math.min(tres.getX(), cuatro.getX()) <= corte.getX()
-								&& corte.getX() <= Math.max(tres.getX(), cuatro.getX())
-								&& Math.min(tres.getY(), cuatro.getY()) <= corte.getY()
+								&& corte.getX() <= Math.max(tres.getX(), cuatro.getX()))
+								if(Math.min(tres.getY(), cuatro.getY()) <= corte.getY()
 								&& corte.getY() <= Math.max(tres.getY(), cuatro.getY())) {
 							if (!(corte.equals(tres) || corte.equals(cuatro))) {
 								Logger.getLogger("El segmento [" + (contador1 + 1) + "] se corta con el segmento ["
@@ -260,9 +252,9 @@ private static boolean igualdouble(double uno, double dos){
 	 * @return
 	 */
 	public static String areaPoligonoToString(Punto[] poligono) {
-		String salida = "------------------------------------------------\n" + "El area del poligono es: "
+		return "------------------------------------------------\n" + "El area del poligono es: "
 				+ areaPoligono(poligono) + " ud(2).\n" + "------------------------------------------------";
-		return salida;
+		
 	}
 
 	public static String noSeIntersectan() {
@@ -367,13 +359,10 @@ private static boolean igualdouble(double uno, double dos){
 	}
 	
 	private boolean areaTrianguloSigno(Punto a, Punto b, Punto c){
-		if((((a.getX()*b.getY())-(a.getY()*b.getX())+(a.getY()*c.getX())-(a.getX()*c.getY())+(b.getX()*c.getY())-(c.getX()*b.getY()))/2.0) <= 0) {
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		Double variable= ((a.getX()*b.getY())-(a.getY()*b.getX())+(a.getY()*c.getX())-(a.getX()*c.getY())+(b.getX()*c.getY())-(c.getX()*b.getY()))/2.0;
+		
+			return (variable <= 0)?false:true;
+		
 	}
 	
 	public Punto[] toArray(){

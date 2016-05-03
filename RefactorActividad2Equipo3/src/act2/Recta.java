@@ -91,6 +91,10 @@ public class Recta {
 		}
 	}
 
+	public Recta(Punto cuatro) {
+
+	}
+
 	/**
 	 * 
 	 * @return

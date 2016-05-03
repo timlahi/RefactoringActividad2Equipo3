@@ -198,14 +198,17 @@ public class Triangulo {
 			}
 			Logger.getLogger("Punto izquierdo:" + izquierdo);
 
+			
 			if (iterAux1.hasNext()) {
 				angulo = iterAux1.next();
+				
 				if (iter1.hasNext()) {
 					iter1.next();
 				} else {
 					iter1 = vertex.listIterator();
 				}
-			} else {
+			} 
+			else {
 				iterAux1 = auxVertex.listIterator();
 				angulo = iterAux1.next();
 				if (!iter1.hasNext()) {

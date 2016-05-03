@@ -4,6 +4,9 @@ import java.io.IOException;
 
 
 
+
+import java.util.logging.Logger;
+
 import act2.Poligono;
 import act2.Punto;
 import act2.Recta;
@@ -229,8 +232,12 @@ public class PoligonoController {
 			        }
 			    }
 		        intersectan();
-	    	}catch(Exception e){
-	    		 throw new RuntimeException(e);
+	    	}
+	    	catch(Exception e){
+	    		 
+				e.getMessage();
+
+				
 	    	}
 	    }
 

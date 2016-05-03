@@ -9,46 +9,25 @@ import javax.swing.JPanel;
  *
  */
 
-public class TriangulosJPanel extends JPanel {
+public class TriangulosJPanel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	Polygon[] poligonos;
 	Graphics g;
-	Punto[] puntos;
+    Punto[] puntos;
 	double minX = Double.MAX_VALUE;
 	double minY = Double.MAX_VALUE;
 
 	public TriangulosJPanel(Triangulo[] triangulos) {
 		poligonos = new Polygon[triangulos.length];	
-		for (int i = 0; i < triangulos.length; i++) {
-			Punto a = triangulos[i].getDerecha();
-			if(a.getX()<minX){
-				minX=a.getX();
-			}
-			if(a.getY()<minY){
-				minY=a.getY();
-			}
-			Punto b = triangulos[i].getIzquierda();
-			if(b.getX()<minX){
-				minX=b.getX();
-			}
-			if(b.getY()<minY){
-				minY=b.getY();
-			}
-			Punto c = triangulos[i].getVertice();
-			if(c.getX()<minX){
-				minX=c.getX();
-			}
-			if(c.getY()<minY){
-				minY=c.getY();
-			}
-		}
-		if (minX<0){
-			minX=-minX;
-		}
-		if (minY<0){
-			minY=-minY;
-		}
+		
+		
+		ciclouno(triangulos);
+		
+		
+			minX=(minX<0)?-minX:minX;
+			minY=(minY<0)?-minY:minY;
+		
 		puntos = new Punto[triangulos.length*3];
 		int contador=0;
 		for (int i = 0; i < triangulos.length; i++) {
@@ -63,6 +42,25 @@ public class TriangulosJPanel extends JPanel {
 			puntos[i+contador++]=b;
 			puntos[i+contador]=c;
 		}
+	}
+
+	private void ciclouno(Triangulo[] triangulos) {
+
+		for (int i = 0; i < triangulos.length; i++) {
+			Punto a = triangulos[i].getDerecha();
+			
+		
+			minX=(a.getX()<minX)?a.getX():minX;
+			minY=(a.getY()<minY)?a.getY():minY;
+			Punto b = triangulos[i].getIzquierda();
+			minX=(b.getX()<minX)?b.getX():minX;
+			minY=(b.getY()<minY)?b.getY():minY;
+			Punto c = triangulos[i].getVertice();
+			minX=(c.getX()<minX)?c.getX():minX;
+			minY=(c.getY()<minY)?c.getY():minY;
+			
+		}
+		
 	}
 
 	/**

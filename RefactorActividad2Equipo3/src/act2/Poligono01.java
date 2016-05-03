@@ -2,6 +2,7 @@ package act2;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.logging.Logger;
 
 /**
  * @author frasco2001
@@ -64,7 +65,7 @@ private static boolean igualdouble(double uno, double dos){
 			} else {
 				derecho = z[i + 1];
 			}
-			// Triangulo puntos3 = new Triangulo(izquierdo, vertice, derecho);
+
 			double angulo = Triangulo.angulo(vertice, izquierdo, derecho);
 			if (angulo == 180) {
 				flagNoVertices += vertice.toString() + " no es un vertice.\n";
@@ -99,7 +100,7 @@ private static boolean igualdouble(double uno, double dos){
 			else
 				b = z[i + 1];
 			resultado = (a.getX() * b.getY()) - (a.getY() * b.getX());
-			//System.out.println(resultado);
+
 			if (i == 0) {
 				signo = resultado;
 			} else {
@@ -115,9 +116,9 @@ private static boolean igualdouble(double uno, double dos){
 					signo = resultado;
 				}
 			}
-			if (i != 0 && i != z.length - 1 && igualdouble(resultado,0) {
-				salida = true;
-			}
+			
+				salida = (i != 0 && i != z.length - 1 && igualdouble(resultado,0))?true:salida;
+			
 		}
 		return salida;
 	}
@@ -242,26 +243,24 @@ private static boolean igualdouble(double uno, double dos){
 				}
 				Recta segunda = new Recta(tres, cuatro);
 				if (Recta.sonParalelas(primera, segunda)) {
-					System.out
-							.println("Los segmentos [" + (contador1 + 1) + "] y [" + (++contador2) + "] son paralelos");
+					Logger.getLogger("Los segmentos [" + (contador1 + 1) + "] y [" + (++contador2) + "] son paralelos");
 				} else {
-					// primera.ecuacionRecta();
-					// segunda.ecuacionRecta();
+	
 					Punto corte = Recta.puntoCorte(primera, segunda);
 					if (primera.getCoeficienteA() * corte.getX() + primera.getCoeficienteB() * corte.getY()
 							+ primera.getCoeficienteC() == 0) {
 						if (Math.min(uno.getX(), dos.getX()) <= corte.getX()
 								&& corte.getX() <= Math.max(uno.getX(), dos.getX())
-								&& Math.min(uno.getY(), dos.getY()) <= corte.getY()
-								&& corte.getY() <= Math.max(uno.getY(), dos.getY())
+								&& Math.min(uno.getY(), dos.getY()) <= corte.getY())
+							if(corte.getY() <= Math.max(uno.getY(), dos.getY())
 								&& Math.min(tres.getX(), cuatro.getX()) <= corte.getX()
-								&& corte.getX() <= Math.max(tres.getX(), cuatro.getX())
-								&& Math.min(tres.getY(), cuatro.getY()) <= corte.getY()
+								&& corte.getX() <= Math.max(tres.getX(), cuatro.getX()))
+								if(Math.min(tres.getY(), cuatro.getY()) <= corte.getY()
 								&& corte.getY() <= Math.max(tres.getY(), cuatro.getY())) {
 							if (!(corte.equals(tres) || corte.equals(cuatro))) {
-								System.out.println("El segmento [" + (contador1 + 1) + "] se corta con el segmento ["
+								Logger.getLogger("El segmento [" + (contador1 + 1) + "] se corta con el segmento ["
 										+ (++contador2) + "]");
-								System.out.println(corte.toString());
+								Logger.getLogger(corte.toString());
 								if (!solucion.contains(corte)){
 									solucion.add(corte);
 								}
