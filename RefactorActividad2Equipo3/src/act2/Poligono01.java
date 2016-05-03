@@ -36,7 +36,7 @@ private static boolean igualdouble(double uno, double dos){
 	 * @return
 	 */
 	public static boolean esPoligono(Punto[] z) {
-		if (seraPoligono(z).equals("ES POLIGONO"))
+		if ("ES POLIGONO".equals(seraPoligono(z)))
 			return true;
 		return false;
 	}
@@ -46,6 +46,9 @@ private static boolean igualdouble(double uno, double dos){
 	 * @param z
 	 * @return
 	 */
+	
+	
+	
 	public static String seraPoligono(Punto[] z) {
 		String salida = "ES POLIGONO";
 		String flagNoVertices = "";
@@ -67,7 +70,7 @@ private static boolean igualdouble(double uno, double dos){
 			}
 
 			double angulo = Triangulo.angulo(vertice, izquierdo, derecho);
-			if (angulo == 180) {
+			if (igualdouble(angulo, 180)) {
 				flagNoVertices += vertice.toString() + " no es un vertice.\n";
 			} else {
 				contador++;
@@ -104,7 +107,7 @@ private static boolean igualdouble(double uno, double dos){
 			if (i == 0) {
 				signo = resultado;
 			} else {
-				if (signo != 0) {
+				if (!igualdouble(signo,0)) {
 					if (signo > 0 && resultado < 0) {
 						salida = true;
 					} else {
@@ -247,16 +250,27 @@ private static boolean igualdouble(double uno, double dos){
 				} else {
 	
 					Punto corte = Recta.puntoCorte(primera, segunda);
-					if (primera.getCoeficienteA() * corte.getX() + primera.getCoeficienteB() * corte.getY()
-							+ primera.getCoeficienteC() == 0) {
-						if (Math.min(uno.getX(), dos.getX()) <= corte.getX()
-								&& corte.getX() <= Math.max(uno.getX(), dos.getX())
-								&& Math.min(uno.getY(), dos.getY()) <= corte.getY())
-							if(corte.getY() <= Math.max(uno.getY(), dos.getY())
-								&& Math.min(tres.getX(), cuatro.getX()) <= corte.getX()
-								&& corte.getX() <= Math.max(tres.getX(), cuatro.getX()))
-								if(Math.min(tres.getY(), cuatro.getY()) <= corte.getY()
-								&& corte.getY() <= Math.max(tres.getY(), cuatro.getY())) {
+					if (igualdouble(primera.getCoeficienteA() * corte.getX() + primera.getCoeficienteB() * corte.getY()
+							+ primera.getCoeficienteC(),0)) {
+						
+						boolean a= Math.min(uno.getX(), dos.getX()) <= corte.getX();	
+						boolean b=corte.getX() <= Math.max(uno.getX(), dos.getX());
+						boolean c= Math.min(uno.getY(), dos.getY()) <= corte.getY();
+						boolean d= corte.getY() <= Math.max(uno.getY(), dos.getY());
+						boolean e= Math.min(tres.getX(), cuatro.getX()) <= corte.getX();
+						boolean f= corte.getX() <= Math.max(tres.getX(), cuatro.getX());
+						boolean g=  Math.min(tres.getY(), cuatro.getY()) <= corte.getY();
+						boolean h= corte.getY() <= Math.max(tres.getY(), cuatro.getY());
+						boolean solucionbooleana1= a && b && c;
+						boolean solucionbooleana2= d && e && f;
+						boolean solucionbooleana3= g && h;
+						
+						
+						
+						
+						
+						
+						if (solucionbooleana1&&solucionbooleana2&&solucionbooleana3) {
 							if (!(corte.equals(tres) || corte.equals(cuatro))) {
 								Logger.getLogger("El segmento [" + (contador1 + 1) + "] se corta con el segmento ["
 										+ (++contador2) + "]");
@@ -283,9 +297,9 @@ private static boolean igualdouble(double uno, double dos){
 	 * @return
 	 */
 	public static String areaPoligonoToString(Punto[] poligono) {
-		String salida = "------------------------------------------------\n" + "El area del poligono es: "
+		return "------------------------------------------------\n" + "El area del poligono es: "
 				+ areaPoligono(poligono) + " ud(2).\n" + "------------------------------------------------";
-		return salida;
+	
 	}
 
 	public static String noSeIntersectan() {

@@ -190,8 +190,13 @@ public class Recta {
 					}
 					x = parteZ1 - parteZ2 * y;
 				} else {
-					if ((igualdouble(primera.getCoeficienteA(),0) && !igualdouble(primera.getCoeficienteB(),0))
-							&& !(igualdouble(primera.getCoeficienteA(),0) && igualdouble(primera.getCoeficienteB(),0))) {
+					
+					boolean a=igualdouble(primera.getCoeficienteA(),0);
+					boolean b= !igualdouble(primera.getCoeficienteB(),0);
+					boolean c= a&&b;
+					boolean d= !(igualdouble(primera.getCoeficienteA(),0) && igualdouble(primera.getCoeficienteB(),0));
+					
+					if (c && d) {
 						x = -segunda.getCoeficienteC();
 						y = -primera.getCoeficienteC();
 					} else {

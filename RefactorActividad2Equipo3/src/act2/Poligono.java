@@ -178,6 +178,10 @@ private static boolean igualdouble(double uno, double dos){
 		int contador1 = 0;
 		int contador2 = 0;
 		ListIterator<Punto> iter1 = lista1.listIterator();
+		
+		
+		
+		
 		while (iter1.hasNext()) {
 			Punto uno = iter1.next();
 			Punto dos = new Punto(0, 0);
@@ -215,17 +219,23 @@ private static boolean igualdouble(double uno, double dos){
 						
 						
 				
-						
-						
-						
-						if (Math.min(uno.getX(), dos.getX()) <= corte.getX()
-								&& corte.getX() <= Math.max(uno.getX(), dos.getX())
-								&& Math.min(uno.getY(), dos.getY()) <= corte.getY())
-							if(corte.getY() <= Math.max(uno.getY(), dos.getY())
-								&& Math.min(tres.getX(), cuatro.getX()) <= corte.getX()
-								&& corte.getX() <= Math.max(tres.getX(), cuatro.getX()))
-								if(Math.min(tres.getY(), cuatro.getY()) <= corte.getY()
-								&& corte.getY() <= Math.max(tres.getY(), cuatro.getY())) {
+				boolean a= Math.min(uno.getX(), dos.getX()) <= corte.getX();	
+				boolean b=corte.getX() <= Math.max(uno.getX(), dos.getX());
+				boolean c= Math.min(uno.getY(), dos.getY()) <= corte.getY();
+				boolean d= corte.getY() <= Math.max(uno.getY(), dos.getY());
+				boolean e= Math.min(tres.getX(), cuatro.getX()) <= corte.getX();
+				boolean f= corte.getX() <= Math.max(tres.getX(), cuatro.getX());
+				boolean g=  Math.min(tres.getY(), cuatro.getY()) <= corte.getY();
+				boolean h= corte.getY() <= Math.max(tres.getY(), cuatro.getY());
+				boolean solucionbooleana1= a && b && c;
+				boolean solucionbooleana2= d && e && f;
+				boolean solucionbooleana3= g && h;
+				
+				
+				
+                if (solucionbooleana1&&solucionbooleana2&&solucionbooleana3) {
+							
+							
 							if (!(corte.equals(tres) || corte.equals(cuatro))) {
 								Logger.getLogger("El segmento [" + (contador1 + 1) + "] se corta con el segmento ["
 										+ (++contador2) + "]");
@@ -234,7 +244,9 @@ private static boolean igualdouble(double uno, double dos){
 									solucion.add(corte);
 								}
 							}
-						} else {
+						} 
+						
+						else {
 							contador2++;
 						}
 					}

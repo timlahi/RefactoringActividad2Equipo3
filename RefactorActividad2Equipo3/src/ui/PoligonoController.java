@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import java.util.logging.Logger;
 
+import javax.management.RuntimeErrorException;
+
 import act2.Poligono;
 import act2.Punto;
 import act2.Recta;
@@ -235,7 +237,8 @@ public class PoligonoController {
 	    	}
 	    	catch(Exception e){
 	    		 
-				e.getMessage();
+				
+				throw e;
 
 				
 	    	}

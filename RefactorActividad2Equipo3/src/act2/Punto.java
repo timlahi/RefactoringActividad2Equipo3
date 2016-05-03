@@ -76,6 +76,8 @@ private static boolean igualdouble(double uno, double dos){
 	@Override
 	public boolean equals(Object o){
 		Punto p = (Punto)o;
+		if(p==null){ 
+			return false;}
 		if(igualdouble(p.getX(),this.x) && igualdouble(p.getY(),this.y)) 
 			return true;
 		return false;
